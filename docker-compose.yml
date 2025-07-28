@@ -1,0 +1,47 @@
+services:
+  mysql:
+    container_name: shikamaru
+    image: mysql
+    ports:
+      - "3320:3306"
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    restart: unless-stopped
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  spring-boot:
+    container_name: levi
+    build:
+      context: ./short-bank
+      dockerfile: Dockerfile
+    ports:
+      - "9000:8080"
+    environment:
+      - DATABASE_NAME=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - SECRET_KEY=${SECRET_KEY}
+    restart: unless-stopped
+
+  angular:
+    container_name: nezuko
+    build:
+      context: ./exam-front
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    restart: unless-stopped
+
+  flask:
+    container_name: ikki
+    build:
+      context: ./prediction-flask-api
+      dockerfile: Dockerfile
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
