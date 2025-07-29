@@ -46,7 +46,8 @@ jobs:
       - name: 🛠️ Build y push de imagen
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: Dockerfile
+          with:
+          context: ./short-bank
+          file: ./short-bank/Dockerfile
           push: true
           tags: ${{secrets.DOCKER_USERNAME}}/exam-back:latest
