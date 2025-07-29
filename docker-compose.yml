@@ -38,9 +38,7 @@ services:
 
   flask:
     container_name: ikki
-    build:
-      context: ./prediction-flask-api
-      dockerfile: Dockerfile
+    image: dockersmng/regresion-api
     restart: unless-stopped
 
 volumes:
