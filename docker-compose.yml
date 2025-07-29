@@ -1,7 +1,7 @@
 services:
   mysql:
-    container_name: shikamaru
-    image: mysql
+    container_name: mysql
+    image: mysql:8.0-oraclelinux8
     ports:
       - "3320:3306"
     environment:
@@ -14,10 +14,8 @@ services:
       - mysql_data:/var/lib/mysql
 
   spring-boot:
-    container_name: levi
-    build:
-      context: ./short-bank
-      dockerfile: Dockerfile
+    container_name: spring
+    image: ${DOCKER_USERNAME}/exam-back:latest
     ports:
       - "9000:8080"
     environment:
@@ -28,7 +26,7 @@ services:
     restart: unless-stopped
 
   angular:
-    container_name: nezuko
+    container_name: angular
     build:
       context: ./exam-front
       dockerfile: Dockerfile
@@ -37,7 +35,7 @@ services:
     restart: unless-stopped
 
   flask:
-    container_name: ikki
+    container_name: flask
     image: dockersmng/regresion-api
     restart: unless-stopped
 
